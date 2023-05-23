@@ -1,53 +1,39 @@
-﻿using MyProject.Helpers;
+﻿using MeDirectUiProject.Helpers;
+using MeDirectUiProject.PageElements;
 using OpenQA.Selenium;
-
 
 namespace MeDirectUiProject.Pages
 {
     public class LoginPage
     {
         private readonly IWebDriver _driver;
+        private LoginPageElements loginElements;
 
         public LoginPage(IWebDriver driver)
         {
             _driver = driver;
-        }
-
-        public void NavigateToHomePage()
-        {
-            // Ana sayfaya gitme işlemleri burada gerçekleştirilir
-            _driver.Navigate().GoToUrl("https://www.saucedemo.com/");
+            loginElements = new LoginPageElements(driver);
         }
 
         public void EnterCredentialsAndSubmit(string username, string password)
         {
-            // Kullanıcı adı ve şifreyi girme işlemleri burada gerçekleştirilir
-            var usernameInput = SeleniumHelper.FindElement(_driver, By.Id("user-name"));
-            usernameInput.SendKeysToElement(username);
-
-            var passwordInput = SeleniumHelper.FindElement(_driver, By.Id("password"));
-            passwordInput.SendKeysToElement(password);
-
-            var loginButton = SeleniumHelper.FindElement(_driver, By.Id("login-button"));
-            loginButton.ClickElement();
+            SeleniumHelper.SendKeysToElement(_driver, loginElements.usernameInput, username);
+            SeleniumHelper.SendKeysToElement(_driver, loginElements.passwordInput, password);
         }
 
-        public bool IsLoginInputDisplayed()
+        public void clickLoginButton()
         {
-            return SeleniumHelper.IsElementDisplayed(_driver, By.Id("user-name"));
-
+            SeleniumHelper.clickToElement(_driver, loginElements.loginButton);
         }
 
-        public bool IsPasswordInputDisplayed()
+        public void NavigateToLoginPage()
         {
-            return SeleniumHelper.IsElementDisplayed(_driver, By.Id("password"));
-
+            _driver.Navigate().GoToUrl("https://www.saucedemo.com/");
         }
 
-        public bool IsLoginButtonDisplayed()
+        public void userShouldSeeLoginPage()
         {
-            return SeleniumHelper.IsElementDisplayed(_driver, By.Id("login-button234234"));
-
+            SeleniumHelper.IsElementDisplayed(_driver, loginElements.loginButton);
         }
     }
 }

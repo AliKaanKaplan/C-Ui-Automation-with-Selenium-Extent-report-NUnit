@@ -1,9 +1,0 @@
-﻿- name: LoginInput
-  locatorType: Id
-  locatorValue: user-name
-- name: PasswordInput
-  locatorType: Id
-  locatorValue: password
-- name: LoginButton
-  locatorType: Id
-  locatorValue: login-button

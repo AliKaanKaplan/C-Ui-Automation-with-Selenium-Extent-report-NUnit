@@ -1,13 +1,10 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.MarkupUtils;
-using AventStack.ExtentReports.Reporter;
 using BoDi;
 using MeDirectUiProject.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System.Threading;
-using TechTalk.SpecFlow;
 
 namespace MeDirectUiProject.Utils
 {
@@ -75,12 +72,16 @@ namespace MeDirectUiProject.Utils
             {
                 var stepType = ScenarioStepContext.Current.StepInfo.StepDefinitionType.ToString();
                 var error = ScenarioContext.Current.TestError;
-                string errorMessage = $"{stepType} failed: {stepName}\nError: {error}";
+
+                var sanitizedStepName = ExtentHelper.SanitizeFileName(stepName);
+
+
+                string errorMessage = $"{stepType} failed: {sanitizedStepName}\nError: {error}";
                 var errorLabel = MarkupHelper.CreateCodeBlock(errorMessage);
 
                 _step.Fail(errorLabel);
 
-                string screenshotName = $"{stepName}_Failure";
+                string screenshotName = $"{sanitizedStepName}_Failure";
                 string screenshotPath = ExtentHelper.TakeScreenshot(_driver, screenshotName);
                 ExtentHelper.AddScreenshotToReport(_step, screenshotPath);
 

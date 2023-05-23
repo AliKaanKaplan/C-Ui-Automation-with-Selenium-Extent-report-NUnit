@@ -1,19 +1,14 @@
-﻿using AventStack.ExtentReports.Reporter;
-using AventStack.ExtentReports;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
+using AventStack.ExtentReports.Reporter;
+using OpenQA.Selenium;
 
 namespace MeDirectUiProject.Helpers
 {
     internal class ExtentHelper
     {
         private static ExtentReports _extent;
-        private static ExtentTest _test;
+        private static ExtentTest _test1;
         private static int _successCount = 0;
         private static int _failureCount = 0;
         private static int _scenarioCount = 0;
@@ -31,8 +26,8 @@ namespace MeDirectUiProject.Helpers
 
         public static ExtentTest CreateTest(string testName)
         {
-            _test = _extent.CreateTest(testName);
-            return _test;
+            _test1 = _extent.CreateTest(testName);
+            return _test1;
         }
 
         public static void FlushReport()
@@ -60,10 +55,10 @@ namespace MeDirectUiProject.Helpers
 
         public static void LogScenarioCounts()
         {
-            _test.Log(Status.Info, $"Total Scenarios: {_scenarioCount}");
-            _test.Log(Status.Info, $"Total Steps: {_successCount + _failureCount}");
-            _test.Log(Status.Info, $"Successful Steps: {_successCount}");
-            _test.Log(Status.Info, $"Failed Scenarios: {_failureCount}");
+            _test1.Log(Status.Info, $"Total Scenarios: {_scenarioCount}");
+            _test1.Log(Status.Info, $"Total Steps: {_successCount + _failureCount}");
+            _test1.Log(Status.Info, $"Successful Steps: {_successCount}");
+            _test1.Log(Status.Info, $"Failed Scenarios: {_failureCount}");
 
             _successCount = 0;
             _failureCount = 0;
@@ -95,7 +90,14 @@ namespace MeDirectUiProject.Helpers
             return feature.CreateNode<Scenario>(scenarioName);
         }
 
-
-
+        public static string SanitizeFileName(string fileName)
+        {
+            string invalidChars = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            foreach (char c in invalidChars)
+            {
+                fileName = fileName.Replace(c.ToString(), "");
+            }
+            return fileName;
+        }
     }
 }

@@ -1,71 +1,49 @@
-﻿using AventStack.ExtentReports;
-using AventStack.ExtentReports.Gherkin.Model;
-using AventStack.ExtentReports.Reporter;
-using BoDi;
-using MeDirectUiProject.Helpers;
+﻿using AventStack.ExtentReports.Gherkin.Model;
 using MeDirectUiProject.Pages;
-using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System.Threading;
-using TechTalk.SpecFlow;
 
 namespace MeDirectUiProject.StepDefinitions
 {
     [Binding]
     public sealed class LoginPageSteps
     {
-        private readonly IWebDriver _driver;
         private readonly LoginPage _loginPage;
-        private ExtentTest _test;
+        private readonly CommonPage _commonPage;
 
         public LoginPageSteps(IWebDriver driver)
         {
-            _driver = driver;
             _loginPage = new LoginPage(driver);
+            _commonPage = new CommonPage(driver);
         }
 
-        [Given(@"User is on the homepage")]
-        public void GivenUserIsOnTheHomepage()
+        [Given(@"User is on the login page")]
+        public void OpenLoginPage()
         {
-            // Gerekirse test nesnesini güncelle ve başarılı sonucu raporla
+            _loginPage.NavigateToLoginPage();
         }
 
-        [When(@"Enter the URL")]
-        public void WhenEnterTheURL()
-        {
-            _loginPage.NavigateToHomePage();
-            // Gerekirse test nesnesini güncelle ve başarılı sonucu raporla
-        }
-
-        [Then(@"User should see username textbox")]
-        public void ThenUserShouldSeeUsernameTextbox()
-        {
-            Assert.IsTrue(_loginPage.IsLoginInputDisplayed());
-            // Gerekirse test nesnesini güncelle ve başarılı sonucu raporla
-        }
-
-        [Then(@"User should see password textbox")]
-        public void ThenUserShouldSeePasswordTextbox()
-        {
-            Assert.IsTrue(_loginPage.IsPasswordInputDisplayed());
-            // Gerekirse test nesnesini güncelle ve başarılı sonucu raporla
-        }
-
-        [Then(@"User should see login button")]
-        public void ThenUserShouldSeeLoginButton()
-        {
-            Assert.IsTrue(_loginPage.IsLoginButtonDisplayed(), "User should see login button");
-
-            // Gerekirse test nesnesini güncelle ve başarılı sonucu raporla
-        }
-
-        [When(@"User enter (.*) and (.*)")]
-        public void WhenUserEnterAnd(string username, string password)
+        [When(@"User enters username (.*) and password (.*) on login page")]
+        public void UserFillCredentials(string username, string password)
         {
             _loginPage.EnterCredentialsAndSubmit(username, password);
-            Thread.Sleep(5000);
-            // Gerekirse test nesnesini güncelle ve başarılı sonucu raporla
+        }
+
+        [When(@"User clicks login button")]
+        public void userClickLoginButtons()
+        {
+            _loginPage.clickLoginButton();
+        }
+
+        [Then(@"User sees (.*) text on page")]
+        public void userSeeText(string text)
+        {
+            _commonPage.IsTextDisplayed(text);
+        }
+
+        [Then(@"User see login page")]
+        public void userSeeLoginPage()
+        {
+            _loginPage.userShouldSeeLoginPage();
         }
     }
 }

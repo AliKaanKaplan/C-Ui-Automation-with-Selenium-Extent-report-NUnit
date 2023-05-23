@@ -12,7 +12,7 @@ packages/
 *.paket
 
 TestResults/
-TestReport.html
+index.html
 *.log
 
 *.feature.cs
