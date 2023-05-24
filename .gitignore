@@ -17,11 +17,11 @@ index.html
 
 *.feature.cs
 
-TestResults/ExtentReports/
-
+Report/ExtentReports/
 chromedriver.exe
 chrome-log.txt
 geckodriver.exe
 gecko-log.txt
 
 Screenshots/
+Report/

@@ -2,17 +2,15 @@
 
 namespace MeDirectUiProject.PageElements
 {
-    public class CheckoutCompletePageElements
+    public class CompletePageElements
     {
         private IWebDriver driver;
 
-        public CheckoutCompletePageElements(IWebDriver driver)
+        public CompletePageElements(IWebDriver driver)
         {
             this.driver = driver;
         }
         public By successOrderImage => By.CssSelector(".pony_express");
-        public By completeHeaderText => By.CssSelector(".complete-header");
-        public By completeText => By.CssSelector(".complete-text");
         public By backHomeButton => By.CssSelector("[data-test=back-to-products]");
 
     }

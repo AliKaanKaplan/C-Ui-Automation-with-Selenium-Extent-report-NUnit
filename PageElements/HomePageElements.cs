@@ -12,11 +12,14 @@ namespace MeDirectUiProject.PageElements
             this.driver = driver;
         }
         public By filterDropdown => By.CssSelector(".product_sort_container");
-        public By productImage => By.CssSelector("div.inventory_item_img");
+        public By productImage => By.CssSelector("img.inventory_item_img");
         public By productName => By.CssSelector(".inventory_item_name");
-        public By productDesc => By.CssSelector(".inventory_item_desc");
         public By productPrice => By.CssSelector(".inventory_item_price");
-        public By addCartButton => By.CssSelector(".pricebar > button");
+        public By addCartButton => By.XPath("//button[text()='Add to cart']");
+        public By productCountCart => By.CssSelector(".shopping_cart_badge");
+
+
+
 
     }
 }

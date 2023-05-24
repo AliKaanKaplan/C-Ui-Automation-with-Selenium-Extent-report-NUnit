@@ -10,7 +10,6 @@ namespace MeDirectUiProject.PageElements
         {
             this.driver = driver;
         }
-        public By continueShoppingButton => By.CssSelector("[data-test=continue-shopping]");
         public By cancelButton => By.CssSelector("[data-test=cancel]");
         public By continueButton => By.CssSelector("[data-test=continue]");
         public By firstnameTextbox => By.CssSelector("[data-test=firstName]");

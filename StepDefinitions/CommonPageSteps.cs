@@ -1,7 +1,5 @@
 ﻿using MeDirectUiProject.Pages;
 using OpenQA.Selenium;
-using System;
-using TechTalk.SpecFlow;
 
 namespace MeDirectUiProject.StepDefinitions
 {
