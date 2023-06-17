@@ -5,6 +5,8 @@ using BoDi;
 using MeDirectUiProject.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
+using Microsoft.Extensions.Configuration;
 
 namespace MeDirectUiProject.Utils
 {
@@ -45,11 +47,49 @@ namespace MeDirectUiProject.Utils
             var scenarioName = ScenarioContext.Current.ScenarioInfo.Title;
             _scenario = _feature.CreateNode<Scenario>(scenarioName);
 
-            _driver = new ChromeDriver();
-            _driver.Manage().Window.Maximize();
+           _driver = CreateDriver();
 
             _container.RegisterInstanceAs(_driver);
         }
+
+         public static IWebDriver CreateDriver()
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("C:\\Users\\k.kaplan\\source\\repos\\UiAssignment\\appsettings.json")
+                .Build();
+
+            string browserName = configuration.GetSection("WebDriverConfig")["Browser"];
+
+            IWebDriver driver = null;
+
+            switch (browserName.ToLower())
+            {
+                case "firefox":
+                    driver = CreateFirefoxDriver();
+                    break;
+                case "chrome":
+                    driver = CreateChromeDriver();
+                    break;
+                default:
+                    driver = CreateChromeDriver();
+                    break;
+            }
+
+            driver.Manage().Window.Maximize();
+
+            return driver;
+        }
+
+        private static IWebDriver CreateFirefoxDriver()
+        {
+            return new FirefoxDriver();
+        }
+
+        private static IWebDriver CreateChromeDriver()
+        {
+            return new ChromeDriver();
+        }
+
 
         // Execute before each step
         [BeforeStep]
